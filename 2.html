@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Highlights - ICGTETA'25</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px;
+        }
+        
+        .carousel-container {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .carousel {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+        }
+        
+        .carousel-item:nth-child(1) {
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+        }
+        
+        .carousel-item:nth-child(2) {
+            background: linear-gradient(45deg, #e74c3c, #e67e22);
+        }
+        
+        .carousel-item:nth-child(3) {
+            background: linear-gradient(45deg, #2ecc71, #1abc9c);
+        }
+        
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .carousel-control {
+            background-color: #1a2a6c;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-control:hover {
+            background-color: #b21f1f;
+            transform: scale(1.1);
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background-color: #1a2a6c;
+            transform: scale(1.2);
+        }
+        
+        .highlights-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .highlights-content h2 {
+            color: #1a2a6c;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fdbb2d;
+        }
+        
+        .student-presentations {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .student-presentations h3 {
+            color: #b21f1f;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .presentation-item {
+            margin-bottom: 20px;
+        }
+        
+        .presentation-item h4 {
+            color: #1a2a6c;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .rating {
+            display: flex;
+        }
+        
+        .rating span {
+            color: #fdbb2d;
+            font-size: 1.5rem;
+            margin-right: 5px;
+        }
+        
+        .conference-info {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .info-card {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(to right, #1a2a6c, #3949ab);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card h3 i {
+            margin-right: 10px;
+            color: #fdbb2d;
+        }
+        
+        footer {
+            background-color: #1a2a6c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .carousel-container, .highlights-content {
+                width: 100%;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Conference Highlights</h1>
+            <p>Memorable moments from ICGTETA'25</p>
+        </header>
+        
+        <div class="content">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            Opening Ceremony
+                        </div>
+                        <div class="carousel-item">
+                            Keynote Sessions
+                        </div>
+                        <div class="carousel-item">
+                            Networking Events
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-controls">
+                        <button class="carousel-control prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-control next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="carousel-indicators">
+                        <div class="indicator active"></div>
+                        <div class="indicator"></div>
+                        <div class="indicator"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlights-content">
+                <h2>ICGTETA'25 Highlights</h2>
+                
+                <div class="student-presentations">
+                    <h3>Student Presentations</h3>
+                    
+                    <div class="presentation-item">
+                        <h4>Student Paper Presentations</h4>
+                        <div class="rating">
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                        </div>
+                    </div>
+                    
+                    <div class="presentation-item">
+                        <h4>Poster Presentations</h4>
+                        <div class="rating">
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                            <span>○</span>
+                        </div>
+                    </div>
+                    
+                    <div class="presentation-item">
+                        <h4>Research Demonstrations</h4>
+                        <div class="rating">
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="conference-info">
+                    <div class="info-card">
+                        <h3><i class="fas fa-calendar-alt"></i> Date</h3>
+                        <p>March 15-17, 2025</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Venue</h3>
+                        <p>International Convention Center</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>ICGTETA'25 - International Conference on Green Technology and Advanced Applications</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.querySelector('.carousel-control.prev');
+            const nextBtn = document.querySelector('.carousel-control.next');
+            let currentIndex = 0;
+            
+            function updateCarousel() {
+                carouselItems.forEach((item, index) => {
+                    item.classList.toggle('active', index === currentIndex);
+                });
+                
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % carouselItems.length;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+                updateCarousel();
+            }
+            
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+            
+            // Auto-advance carousel every 5 seconds
+            setInterval(nextSlide, 5000);
+        });
+    </script>
+</body>
+</html>
